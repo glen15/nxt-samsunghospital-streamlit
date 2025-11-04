@@ -41,7 +41,23 @@ def get_response_from_bedrock(prompt):
 
         # Bedrock 모델 호출
         response = bedrock_runtime.invoke_model(
-            modelId=FILL_ME_IN,  # 사용할 모델 ID
+            # Claude 3 Haiku
+            # Anthropic에서 가장 빠른 최소형 모델
+            # 거의 즉각적인 반응성을 제공
+            # 간단한 쿼리와 요청에 빠르게 답변
+            # {
+            #     "판매 기준": "Anthropic",
+            #     "범주": ["이미지를 텍스트로 변환", "대화", "채팅 최적화"],
+            #     "마지막 버전": "v1",
+            #     "출시 날짜": "Thu, 14 Mar 2024 08:00:00 GMT",
+            #     "모델 ID": "anthropic.claude-3-haiku-20240307-v1:0",
+            #     "양식": "TEXT & VISION",
+            #     "최대 토큰": "200k",
+            #     "언어": "영어 및 기타 여러 언어",
+            #     "배포 유형": "서버리스"
+            # }
+            # 우리가 사용할 Claude 3 Haiku 모델 정보에서 필요한 내용을 입력하세요.
+            modelId="FILL_ME_IN",  # 사용할 모델 ID
             body=body,  # 요청 본문 전달
         )
         response_body = json.loads(response.get("body").read())  # 응답 본문 JSON 파싱
