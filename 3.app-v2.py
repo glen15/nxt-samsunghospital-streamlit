@@ -47,7 +47,7 @@ def generate_doctor_introduction(name, department, specialty, original_intro):
         )
 
         response = bedrock_runtime.invoke_model(
-            modelId="anthropic.claude-3-5-sonnet-20241022-v2:0",  # Claude 모델 ID
+            modelId="anthropic.claude-3-haiku-20240307-v1:0",  # Claude 모델 ID
             body=body,
         )
         response_body = json.loads(response.get("body").read())
