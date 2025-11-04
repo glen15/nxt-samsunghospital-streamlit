@@ -41,7 +41,7 @@ def get_response_from_bedrock(messages):
 
         # Bedrock 모델 호출
         response = bedrock_runtime.invoke_model(
-            modelId=FILL_ME_IN,
+            modelId="anthropic.claude-3-haiku-20240307-v1:0",
             body=body,  # 요청 본문
         )
         response_body = json.loads(response.get("body").read())  # 응답 본문 파싱
@@ -50,9 +50,12 @@ def get_response_from_bedrock(messages):
         ### 응답 데이터를 참고하여 아래 추출 데이터를 적절하게 변수에 할당하세요.
 
         # 모델 출력 추출
-        output_text = FILL_ME_IN
+        output_text = response_body["content"][0]["text"]
 
-        # 토큰 사용량 추출
+        print(response_body)
+
+        # AI 출력 데이터 중 입 출력 토큰 관련 내용을 찾아서 변수에 할당하세요.
+
         input_tokens = FILL_ME_IN  # 입력 토큰 수 추출
         output_tokens = FILL_ME_IN  # 출력 토큰 수 추출
         total_tokens = input_tokens + output_tokens  # 입출력 토큰 수 계산
