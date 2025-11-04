@@ -10,15 +10,11 @@ class Handler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header("Content-Type", "text/plain; charset=utf-8")
             self.end_headers()
-            self.wfile.write(
-                f"{username}의 서버 {port} 포트에서 실행중 !!".encode("utf-8")
-            )
+            self.wfile.write(f"{username}의 서버 {port} 포트에서 실행중 !!".encode())
         else:
             self.send_response(404)
             self.end_headers()
-            self.wfile.write("Not Found".encode("utf-8"))
+            self.wfile.write("Not Found".encode())
 
 
-server = HTTPServer(("", port), Handler)
-print(f"서버가 {port}번 포트에서 실행중입니다.")
-server.serve_forever()
+HTTPServer(("", port), Handler).serve_forever()
