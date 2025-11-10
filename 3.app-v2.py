@@ -67,14 +67,17 @@ def generate_patient_guidance(patient_name, age, diagnosis, symptoms, treatment_
         return None
 
 
-# 입력 폼과 결과를 두 개의 컬럼으로 구성
+# 입력 폼
+st.write("👋 **환자 정보를 입력해 주세요!**")
+
 col1, col2 = st.columns(2)
 
 with col1:
-    st.write("👋 **환자 정보를 입력해 주세요!**")
     patient_name = st.text_input("👤 환자 이름", "홍길동")
     age = st.number_input("🎂 나이", min_value=0, max_value=150, value=45)
     diagnosis = st.text_input("🏥 진단명", "고혈압")
+
+with col2:
     symptoms = st.text_area(
         "🩺 증상", "두통, 어지러움", help="환자가 호소하는 증상을 입력해주세요."
     )
@@ -84,40 +87,45 @@ with col1:
         help="처방된 약물이나 치료 방법을 입력해주세요.",
     )
 
-with col2:
-    st.write("### 🎯 환자 안내 메시지")
-    if st.button("✨ 안내 메시지 생성하기", type="primary"):
-        # 입력 결과를 화면에 출력
-        if patient_name and age and diagnosis and symptoms and treatment_plan:
-            with st.spinner("🤖 AI가 환자 맞춤형 안내 메시지를 생성 중입니다..."):
-                # AI를 사용하여 환자 안내 메시지 생성
-                guidance = generate_patient_guidance(
-                    patient_name, age, diagnosis, symptoms, treatment_plan
-                )
+# 버튼을 중앙에 배치
+st.write("")
+if st.button("✨ 안내 메시지 생성하기", type="primary", use_container_width=True):
+    # 입력 결과를 화면에 출력
+    if patient_name and age and diagnosis and symptoms and treatment_plan:
+        with st.spinner("🤖 AI가 환자 맞춤형 안내 메시지를 생성 중입니다..."):
+            # AI를 사용하여 환자 안내 메시지 생성
+            guidance = generate_patient_guidance(
+                patient_name, age, diagnosis, symptoms, treatment_plan
+            )
 
-            st.success("✅ 환자 안내 메시지가 생성되었습니다!")
-            st.write("---")
-            st.write("### 📋 환자 정보 요약")
+        st.success("✅ 환자 안내 메시지가 생성되었습니다!")
+        
+        # 환자 정보 요약을 컬럼으로 표시
+        st.write("---")
+        st.write("### 📋 환자 정보 요약")
+        summary_col1, summary_col2 = st.columns(2)
+        with summary_col1:
             st.write(f"- **👤 환자 이름**: {patient_name}")
             st.write(f"- **🎂 나이**: {age}세")
             st.write(f"- **🏥 진단명**: {diagnosis}")
+        with summary_col2:
             st.write(f"- **🩺 증상**: {symptoms}")
             st.write(f"- **💊 치료 계획**: {treatment_plan}")
 
-            # AI 생성 안내 메시지 표시
-            st.write("---")
-            if guidance:
-                st.write("### 📝 환자 안내 메시지")
-                st.success(guidance)
-                st.write(
-                    "💡 *위 안내 메시지는 AI가 환자 정보를 바탕으로 자동으로 생성했습니다.*"
-                )
-            else:
-                st.warning("⚠️ 안내 메시지 생성에 실패했습니다. 다시 시도해주세요.")
-
-            st.balloons()  # 풍선 애니메이션 출력
+        # AI 생성 안내 메시지를 전체 너비로 표시
+        st.write("---")
+        if guidance:
+            st.write("### 📝 환자 안내 메시지")
+            st.success(guidance)
+            st.write(
+                "💡 *위 안내 메시지는 AI가 환자 정보를 바탕으로 자동으로 생성했습니다.*"
+            )
         else:
-            st.error("❌ 모든 필드를 입력해 주세요!")
+            st.warning("⚠️ 안내 메시지 생성에 실패했습니다. 다시 시도해주세요.")
+
+        st.balloons()  # 풍선 애니메이션 출력
+    else:
+        st.error("❌ 모든 필드를 입력해 주세요!")
 
 # 추가 정보 (하단 박스에 배치)
 st.write("---")
